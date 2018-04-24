@@ -1,0 +1,19 @@
+{
+  "name": "msbf_node_bot",
+  "version": "1.0.0",
+  "description": "MSBF POC NODE BOT",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/c-h-russell-walker/msbf_node_poc.git"
+  },
+  "author": "c-h-russell-walker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/c-h-russell-walker/msbf_node_poc/issues"
+  },
+  "homepage": "https://github.com/c-h-russell-walker/msbf_node_poc#readme"
+}
