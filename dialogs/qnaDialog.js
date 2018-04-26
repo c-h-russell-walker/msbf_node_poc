@@ -1,8 +1,8 @@
 var builder = require('botbuilder');
 var builder_cognitiveservices = require("botbuilder-cognitiveservices");
 
-exports.beginDialog = function (session, options) {
-    session.beginDialog('basicQnAMakerDialog', options);
+exports.beginDialog = function (session) {
+    session.beginDialog('basicQnAMakerDialog');
 }
 
 exports.create = function (bot) {

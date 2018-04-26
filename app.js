@@ -4,6 +4,7 @@ var builder = require('botbuilder');
 
 
 var qnaDialog = require('./dialogs/qnaDialog');
+var echoDialog = require('./dialogs/echoDialog');
 
 
 // Setup DB Storage
@@ -43,6 +44,7 @@ var bot = new builder.UniversalBot(
 
 // Register dialogs with bot
 qnaDialog.create(bot);
+echoDialog.create(bot);
 
 
 bot.dialog('faqDialog', [
@@ -106,13 +108,13 @@ bot.on('conversationUpdate', function (message) {
 
 // Base entry point for bot interaction
 bot.dialog('/', function (session) {
+    console.log('IN SLASH ROUTER')
     switch (session.conversationData.dialog) {
         case 'qnaDialog':
             session.beginDialog(session.conversationData.dialog);
             break;
         default:
-            session.send("Goodbye.")
-            session.endDialog();
+            session.beginDialog('echoDialog');
             break;
     }
 });
