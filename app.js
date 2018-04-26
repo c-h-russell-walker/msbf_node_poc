@@ -86,11 +86,9 @@ bot.dialog('startBot', [
                 session.beginDialog('faqDialog');
                 break;
             case 2: // 'Call API'
-                session.conversationData.dialog = 'apiDialog';
                 session.beginDialog('apiDialog');
                 break;
             case 3: // 'Echo Me'
-                session.conversationData.dialog = 'echoDialog';
                 session.beginDialog('echoDialog');
                 break;
             default:
@@ -120,15 +118,9 @@ bot.on('conversationUpdate', function (message) {
 
 // Base entry point for bot interaction
 bot.dialog('/', function (session) {
-    switch (session.conversationData.dialog) {
-        case 'qnaDialog':
-        case 'apiDialog':
-        case 'echoDialog':
-            session.beginDialog(session.conversationData.dialog);
-            break;
-        default:
-            session.send("Goodbye.")
-            session.endDialog();
-            break;
+    if (session.conversationData.dialog) {
+        session.replaceDialog(session.conversationData.dialog);
+    } else {
+        session.routeToActiveDialog();
     }
 });
