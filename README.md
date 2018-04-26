@@ -22,3 +22,4 @@ PORT=9000 DBHost=<COSMOS_DB_HOST> DBKey=<COSMOS_DB_KEY> node app.js`
  * [botbuilder-python](https://github.com/Microsoft/botbuilder-python/wiki)
  * [How to configure Bot Channels](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-manage-channels)
  * [QnA Maker](https://qnamaker.ai/)
+ * [QnA Dialog Npm Module](https://www.npmjs.com/package/botbuilder-cognitiveservices)
