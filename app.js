@@ -3,6 +3,8 @@ var azure = require('botbuilder-azure');
 var builder = require('botbuilder');
 
 
+var startDialog = require('./dialogs/startDialog');
+var faqDialog = require('./dialogs/faqDialog');
 var qnaDialog = require('./dialogs/qnaDialog');
 var apiDialog = require('./dialogs/apiDialog');
 var echoDialog = require('./dialogs/echoDialog');
@@ -44,59 +46,11 @@ var bot = new builder.UniversalBot(
 
 
 // Register dialogs with bot
+startDialog.create(bot);
+faqDialog.create(bot);
 qnaDialog.create(bot);
 apiDialog.create(bot);
 echoDialog.create(bot);
-
-
-bot.dialog('faqDialog', [
-    function (session) {
-        builder.Prompts.text(session, 'Enter any questions you may have.')
-    },
-    function (session, results) {
-        session.conversationData.dialog = 'qnaDialog';
-        session.replaceDialog('qnaDialog');
-    }
-]);
-
-
-var buttonOptions = [
-    'Get an Estimate',
-    'Ask a Question',
-    'Call API',
-    'Echo Me',
-];
-bot.dialog('startBot', [
-    function (session, args, next) {
-        builder.Prompts.choice(
-            session,
-            "Welcome to TestBot, what can we help you with today?",
-            buttonOptions.join('|'),
-            {
-                listStyle: builder.ListStyle.button
-            }
-        );
-    },
-    function (session, results, next) {
-        switch (results.response.index) {
-            case 0: // 'Get an Estimate'
-                session.beginDialog('getAnEstimate');
-                break;
-            case 1: // 'Ask a Question'
-                session.beginDialog('faqDialog');
-                break;
-            case 2: // 'Call API'
-                session.beginDialog('apiDialog');
-                break;
-            case 3: // 'Echo Me'
-                session.beginDialog('echoDialog');
-                break;
-            default:
-                session.endDialog();
-                break;
-        }
-    }
-]);
 
 
 // We use this hook to check for start of conversation
@@ -111,7 +65,7 @@ bot.on('conversationUpdate', function (message) {
         &&
         membersAdded[0].id === message.address.bot.id
     ) {
-        bot.beginDialog(message.address, 'startBot');
+        bot.beginDialog(message.address, 'startDialog');
     }
 });
 

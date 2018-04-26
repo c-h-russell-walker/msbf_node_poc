@@ -1,4 +1,3 @@
-var builder = require('botbuilder');
 
 exports.beginDialog = function (session) {
     session.beginDialog('echoDialog');

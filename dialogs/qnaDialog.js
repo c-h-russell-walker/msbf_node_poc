@@ -1,4 +1,3 @@
-var builder = require('botbuilder');
 var builder_cognitiveservices = require("botbuilder-cognitiveservices");
 
 exports.beginDialog = function (session) {

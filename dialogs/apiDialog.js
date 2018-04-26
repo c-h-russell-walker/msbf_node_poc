@@ -1,4 +1,3 @@
-var builder = require('botbuilder');
 var request = require('request');
 
 exports.beginDialog = function (session) {
