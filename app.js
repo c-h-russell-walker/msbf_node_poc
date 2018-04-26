@@ -4,6 +4,7 @@ var builder = require('botbuilder');
 
 
 var qnaDialog = require('./dialogs/qnaDialog');
+var apiDialog = require('./dialogs/apiDialog');
 var echoDialog = require('./dialogs/echoDialog');
 
 
@@ -44,6 +45,7 @@ var bot = new builder.UniversalBot(
 
 // Register dialogs with bot
 qnaDialog.create(bot);
+apiDialog.create(bot);
 echoDialog.create(bot);
 
 
@@ -61,12 +63,14 @@ bot.dialog('faqDialog', [
 var buttonOptions = [
     'Get an Estimate',
     'Ask a Question',
+    'Call API',
+    'Echo Me',
 ];
 bot.dialog('startBot', [
     function (session, args, next) {
         builder.Prompts.choice(
             session,
-            "Welcome to Spray-Net, what can we help you with today?",
+            "Welcome to TestBot, what can we help you with today?",
             buttonOptions.join('|'),
             {
                 listStyle: builder.ListStyle.button
@@ -80,6 +84,14 @@ bot.dialog('startBot', [
                 break;
             case 1: // 'Ask a Question'
                 session.beginDialog('faqDialog');
+                break;
+            case 2: // 'Call API'
+                session.conversationData.dialog = 'apiDialog';
+                session.beginDialog('apiDialog');
+                break;
+            case 3: // 'Echo Me'
+                session.conversationData.dialog = 'echoDialog';
+                session.beginDialog('echoDialog');
                 break;
             default:
                 session.endDialog();
@@ -108,13 +120,15 @@ bot.on('conversationUpdate', function (message) {
 
 // Base entry point for bot interaction
 bot.dialog('/', function (session) {
-    console.log('IN SLASH ROUTER')
     switch (session.conversationData.dialog) {
         case 'qnaDialog':
+        case 'apiDialog':
+        case 'echoDialog':
             session.beginDialog(session.conversationData.dialog);
             break;
         default:
-            session.beginDialog('echoDialog');
+            session.send("Goodbye.")
+            session.endDialog();
             break;
     }
 });
