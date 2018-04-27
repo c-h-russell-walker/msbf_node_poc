@@ -25,16 +25,16 @@ exports.create = function (bot) {
         function (session, results, next) {
             switch (results.response.index) {
                 case 0: // 'Get an Estimate'
-                    session.beginDialog('getAnEstimate');
+                    session.replaceDialog('getAnEstimate');
                     break;
                 case 1: // 'Ask a Question'
-                    session.beginDialog('faqDialog');
+                    session.replaceDialog('faqDialog');
                     break;
                 case 2: // 'Call API'
-                    session.beginDialog('apiDialog');
+                    session.replaceDialog('apiDialog');
                     break;
                 case 3: // 'Echo Me'
-                    session.beginDialog('echoDialog');
+                    session.replaceDialog('echoDialog');
                     break;
                 default:
                     session.endDialog();
