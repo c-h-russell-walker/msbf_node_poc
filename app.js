@@ -10,15 +10,25 @@ var apiDialog = require('./dialogs/apiDialog');
 var echoDialog = require('./dialogs/echoDialog');
 
 
-// Setup DB Storage
-var documentDbOptions = {
-    host: process.env.DBHost,
-    masterKey: process.env.DBKey,
-    database: 'botdocs',
-    collection: 'botdata'
-};
-var docDbClient = new azure.DocumentDbClient(documentDbOptions);
-var cosmosStorage = new azure.AzureBotStorage({ gzipData: false }, docDbClient);
+// Setup Storage
+var botStorage;
+if (process.env.DBHost && process.env.DBKey) {
+    var documentDbOptions = {
+        host: process.env.DBHost,
+        masterKey: process.env.DBKey,
+        database: 'botdocs',
+        collection: 'botdata'
+    };
+    var docDbClient = new azure.DocumentDbClient(documentDbOptions);
+    botStorage = new azure.AzureBotStorage(
+        {
+            gzipData: false
+        },
+        docDbClient
+    );
+} else {
+    botStorage = new builder.MemoryBotStorage();
+}
 
 
 // Setup Restify Server
@@ -41,7 +51,7 @@ server.post('/api/messages', connector.listen());
 var bot = new builder.UniversalBot(
     connector,
 ).set(
-    'storage', cosmosStorage
+    'storage', botStorage
 );
 
 
