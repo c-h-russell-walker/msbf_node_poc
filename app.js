@@ -78,3 +78,11 @@ bot.dialog('/', function (session) {
         session.routeToActiveDialog();
     }
 });
+
+// The dialog stack is cleared & faqDialog is invoked when the user enters 'faq'
+bot.dialog('faqRoute', function (session, args, next) {
+    session.beginDialog('faqDialog');
+})
+.triggerAction({
+    matches: /^faq$/i,
+});
