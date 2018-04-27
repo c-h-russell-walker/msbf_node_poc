@@ -16,7 +16,7 @@ exports.create = function (bot) {
             builder.Prompts.choice(
                 session,
                 "Welcome to TestBot, what can we help you with today?",
-                buttonOptions.join('|'),
+                buttonOptions,
                 {
                     listStyle: builder.ListStyle.button
                 }
