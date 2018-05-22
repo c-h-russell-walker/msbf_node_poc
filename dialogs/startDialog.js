@@ -7,39 +7,30 @@ exports.beginDialog = function (session) {
 exports.create = function (bot) {
     bot.dialog('startDialog', [
         function (session, args, next) {
-            var buttonOptions = [
-                'Get an Estimate',
-                'Ask a Question',
-                'Call API',
-                'Echo Me',
-            ];
-            builder.Prompts.choice(
-                session,
-                "Welcome to TestBot, what can we help you with today?",
-                buttonOptions,
-                {
-                    listStyle: builder.ListStyle.button
-                }
-            );
-        },
-        function (session, results, next) {
-            switch (results.response.index) {
-                case 0: // 'Get an Estimate'
-                    session.replaceDialog('getAnEstimate');
-                    break;
-                case 1: // 'Ask a Question'
-                    session.replaceDialog('faqDialog');
-                    break;
-                case 2: // 'Call API'
-                    session.replaceDialog('apiDialog');
-                    break;
-                case 3: // 'Echo Me'
-                    session.replaceDialog('echoDialog');
-                    break;
-                default:
-                    session.endDialog();
-                    break;
-            }
+            var title = "Welcome to GoTestBot!";
+            var subtitle = "What can we help you with today?";
+            var msg = new builder.Message(session);
+            msg.attachments([
+                new builder.HeroCard(session)
+                    .title(title)
+                    .subtitle(subtitle)
+                    .buttons([
+                        builder.CardAction.dialogAction(
+                            session,
+                            'faqDialog',
+                            undefined,
+                            'Ask a Question'
+                        ),
+                        builder.CardAction.dialogAction(
+                            session,
+                            'echoDialog',
+                            undefined,
+                            'Echo Me'
+                        ),
+                    ]),
+            ]);
+            session.send(msg);
+            session.endDialog();
         }
     ]);
 }

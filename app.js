@@ -96,3 +96,11 @@ bot.dialog('faqRoute', function (session, args, next) {
 .triggerAction({
     matches: /^faq$/i,
 });
+
+var dialogRoutes = [
+    'faqDialog',
+    'echoDialog',
+]
+dialogRoutes.map(function mapDialogRoutes(value) {
+    bot.beginDialogAction(value, value);
+});
