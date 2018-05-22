@@ -10,8 +10,7 @@ exports.create = function (bot) {
             builder.Prompts.text(session, 'Enter any questions you may have.')
         },
         function (session, results) {
-            session.conversationData.dialog = 'qnaDialog';
-            session.replaceDialog('qnaDialog');
+            session.replaceDialog('echoDialog');
         }
     ]);
 }
